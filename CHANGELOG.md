@@ -23,12 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - familiars now disconnect when their caster leaves the server. Don't worry, they'll be back when you log in again.
 - familiars may now wander a little farther from you
 - the recipe for a soulsearcher's lens was changed to require transmuted silver instead of a purified vinteum ingot.
+- familiars now disconnect when their caster leaves the server. Don't worry, they'll be back when you log in again.
+- familiars may now wander a little farther from you
 
 ### Fixed
 - added the missing counterspell recipe
 - added modifier descriptions for all spell components
 - updated the treestride gui so that the delete button does not overlap the teleport text 
-
 
 ## [1.20.1-forge-1.8.1](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.8.1)
 

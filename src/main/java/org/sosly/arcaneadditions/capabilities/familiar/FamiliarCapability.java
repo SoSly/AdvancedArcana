@@ -200,8 +200,8 @@ public class FamiliarCapability implements IFamiliarCapability {
         lastHealingTick = lastHealingTick > 0 ? lastHealingTick : caster.level().getGameTime();
         lastMaintenanceTick = lastMaintenanceTick > 0 ? lastMaintenanceTick : caster.level().getGameTime();
 
-        // validate the familiar's max mana every 40 ticks
         if (lastMaintenanceTick < (caster.level().getGameTime() - 40L)) {
+            // check whether the familiar's max mana needs to be updated based on the caster's magic level
             castingResource.setMaxAmountByLevel(this.getMagicLevel());
             lastMaintenanceTick = caster.level().getGameTime();
 
