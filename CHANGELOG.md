@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - improved familiar AI a little bit, but it still needs a lot of work.
 - familiars now disconnect when their caster leaves the server. Don't worry, they'll be back when you log in again.
 - familiars may now wander a little farther from you
+- the recipe for a soulsearcher's lens was changed to require transmuted silver instead of a purified vinteum ingot.
 
 ### Fixed
 - added the missing counterspell recipe
