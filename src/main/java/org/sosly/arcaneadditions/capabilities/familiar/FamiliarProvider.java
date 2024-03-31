@@ -65,7 +65,7 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
                 CompoundTag rnbt = new CompoundTag();
                 spell.getRecipe().writeToNBT(rnbt);
                 snbt.put("recipe", rnbt);
-                spells.put("spell_" + i, snbt);
+                spells.put("spell_" + i++, snbt);
             }
             nbt.put("spells", spells);
         }
