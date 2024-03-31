@@ -6,6 +6,7 @@
     "minecraft:iron_ingot",
     "mna:vinteum_ingot",
     "minecraft:gold_ingot",
-    "mna:purified_vinteum_ingot"
+    "mna:purified_vinteum_ingot",
+    "mna:superheated_purified_vinteum_ingot"
   ]
 }

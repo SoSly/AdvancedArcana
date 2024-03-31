@@ -45,26 +45,24 @@ public class CastUtilitySpell extends Goal {
     @Override
     public boolean canUse() {
         IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
-        if (cap == null || cap.isOrderedToStay() || cap.getSpellsKnown().isEmpty()) {
+        if (cap == null || cap.isOrderedToStay() || cap.isBapped() || cap.getSpellsKnown().isEmpty()) {
             return false;
         }
-        long sinceLastCast = familiar.getServer().overworld().getGameTime() - lastCast;
         long sinceLastAttempt = familiar.getServer().overworld().getGameTime() - lastAttempt;
-        if (sinceLastCast < 20L || sinceLastAttempt < 20L) {
+        if (sinceLastAttempt < 20L) {
             return false;
         }
         lastAttempt = familiar.getServer().overworld().getGameTime();
-        ArcaneAdditions.LOGGER.error("sinceLastCast: " + sinceLastCast + ", sinceLastAttempt: " + sinceLastAttempt + ", spells known: " + cap.getSpellsKnown().size());
-        // todo: sinceLastCast should be per spell
-        // todo: possibly we should have a CastUtilitySpell Goal for each spell, with the spell passed in at creation
-        //       this would allow us to have a separate lastCast for each spell but would require us to remove the goal
-        //       when the spell is unlearned.
         spellToCast = cap.getSpellsKnown().stream()
                 .filter(spell -> !spell.isOffensive())
                 .filter(spell -> {
-                    int possibility = (int) Math.max(spell.getFrequency().getSeconds() - ((sinceLastCast - 20L) / 40), 1L);
+                    int sinceLastCast = (int) ((familiar.getServer().overworld().getGameTime() - spell.getLastCast())/20);
+                    if (sinceLastCast < (spell.getFrequency().getSeconds()/4)) {
+                        return false;
+                    }
+                    int possibility = Math.max(FamiliarHelper.calculateSpellcastingProbabilitypublic(spell.getFrequency().getSeconds(), sinceLastCast), 1);
                     int random = familiar.getServer().overworld().getRandom().nextInt(possibility);
-                    ArcaneAdditions.LOGGER.error("possibility: " + possibility + ", ticks: " + spell.getFrequency().getSeconds() + ", random: " + random);
+                    ArcaneAdditions.LOGGER.debug("spell: " + spell.getName().getString() + ", possibility: " + possibility + ", random: " + random + ", sinceLastCast: " + sinceLastCast);
                     return random == 0;
                 })
                 .findAny();
@@ -203,6 +201,7 @@ public class CastUtilitySpell extends Goal {
             cap.getCastingResource().consume(familiar, mana);
             this.hasCast = true;
             this.lastCast = familiar.getServer().overworld().getGameTime();
+            this.spellToCast.get().setLastCast(familiar.getServer().overworld().getGameTime());
             ArcaneAdditions.LOGGER.error("casting spell");
             this.stop();
         }

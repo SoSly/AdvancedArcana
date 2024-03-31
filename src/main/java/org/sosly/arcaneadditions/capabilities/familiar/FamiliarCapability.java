@@ -1,10 +1,12 @@
 package org.sosly.arcaneadditions.capabilities.familiar;
 
 import com.mna.api.capabilities.IPlayerMagic;
+import com.mna.api.capabilities.IPlayerProgression;
 import com.mna.api.capabilities.resource.ICastingResource;
 import com.mna.capabilities.playerdata.magic.PlayerMagicProvider;
 import com.mna.capabilities.playerdata.magic.resources.CastingResourceRegistry;
 import com.mna.capabilities.playerdata.magic.resources.Mana;
+import com.mna.capabilities.playerdata.progression.PlayerProgressionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -190,9 +192,12 @@ public class FamiliarCapability implements IFamiliarCapability {
     @Override
     public void addSpellKnown(FamiliarSpell spell) {
         AtomicInteger i = new AtomicInteger();
-        // todo: base this limit on the tier of the caster (T3 = 1, T4 = 2, T5 = 3)
-        // todo: make sure we are getting rid of the oldest spell first
-        spellsKnown.removeIf((s) -> i.getAndIncrement() > 2);
+        if (caster == null) {
+            return;
+        }
+        IPlayerProgression progression = caster.getCapability(PlayerProgressionProvider.PROGRESSION).orElse(null);
+        int maxKnown = progression.getTier() - 2;
+        spellsKnown.removeIf((s) -> (i.getAndIncrement() > maxKnown || s.getName().equals(spell.getName())));
         spellsKnown.add(spell);
     }
 

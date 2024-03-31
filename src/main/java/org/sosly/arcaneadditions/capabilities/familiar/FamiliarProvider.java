@@ -4,6 +4,7 @@ import com.mna.spells.crafting.SpellRecipe;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -62,6 +63,7 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
                 CompoundTag snbt = new CompoundTag();
                 snbt.putBoolean("offensive", spell.isOffensive());
                 snbt.putInt("frequency", spell.getFrequency().ordinal());
+                snbt.putString("name", spell.getName().getString());
                 CompoundTag rnbt = new CompoundTag();
                 spell.getRecipe().writeToNBT(rnbt);
                 snbt.put("recipe", rnbt);
@@ -113,7 +115,8 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
                     }
                     boolean offensive = snbt.getBoolean("offensive");
                     FamiliarSpell.Frequency frequency = FamiliarSpell.Frequency.values()[snbt.getInt("frequency")];
-                    FamiliarSpell spell = new FamiliarSpell(recipe, frequency, offensive);
+                    Component name = Component.literal(snbt.getString("name"));
+                    FamiliarSpell spell = new FamiliarSpell(name, recipe, frequency, offensive);
                         instance.addSpellKnown(spell);
                 }
             }

@@ -175,4 +175,29 @@ public class FamiliarHelper {
         familiar.targetSelector.addGoal(1, new CasterHurtByTargetGoal(familiar));
         familiar.targetSelector.addGoal(2, new CasterHurtTargetGoal(familiar));
     }
+
+    public static int calculateSpellcastingProbabilitypublic(int initialProbability, int elapsedSeconds) {
+        double linearStart = initialProbability * 0.75;
+        double exponentialEnd = initialProbability * 1.25;
+
+        // Constants for adjustments (these may need fine-tuning)
+        double linearEndProbability = initialProbability / 1.5;
+        double linearRate = (initialProbability - linearEndProbability) / (initialProbability - linearStart);
+        double k = 0.2; // Exponential growth rate
+
+        if (elapsedSeconds < linearStart) {
+            // Phase 1: Constant probability
+            return initialProbability;
+        } else if (elapsedSeconds < initialProbability) {
+            // Phase 2: Linear increase
+            return (int) (initialProbability - linearRate * (elapsedSeconds - linearStart));
+        } else if (elapsedSeconds <= exponentialEnd) {
+            // Phase 3: Exponential increase
+            double startProbPhase3 = initialProbability - linearRate * (initialProbability - linearStart);
+            return (int) (startProbPhase3 / Math.exp(k * (elapsedSeconds - initialProbability)));
+        } else {
+            // Beyond the designed curve, assuming certainty
+            return 1;
+        }
+    }
 }
