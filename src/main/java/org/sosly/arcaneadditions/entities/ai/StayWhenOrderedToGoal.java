@@ -40,6 +40,7 @@ public class StayWhenOrderedToGoal extends Goal {
     }
 
     public void start() {
+        familiar.getMoveControl().setWantedPosition(familiar.getX(), familiar.getY(), familiar.getZ(), 0.0D);
         familiar.getNavigation().stop();
         IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
         if (cap != null) {

@@ -1,0 +1,51 @@
+{
+  "type": "mna:ritual",
+  "tier": 3,
+  "pattern": [
+    [  0,  1,  0,  5,  0 ],
+    [  0,  2,  0,  6,  0 ],
+    [  8,  0, 16,  0, 14 ],
+    [  9,  0, 11,  0, 13 ],
+    [  0, 10,  0, 12,  0 ]
+  ],
+  "reagents": [
+    " E E ",
+    " I P ",
+    "  S  ",
+    "C   C",
+    "     "
+  ],
+  "keys": {
+    "I": {
+      "item": "arcaneadditions:familiar_training_ingots",
+      "optional": false,
+      "consume": true
+    },
+    "P": {
+      "item": "arcaneadditions:familiar_training_powders",
+      "optional": false,
+      "consume": true
+    },
+    "S": {
+      "item": "mna:spell",
+      "optional": false,
+      "consume": true
+    },
+    "E": {
+      "item": "minecraft:emerald",
+      "optional": false,
+      "consume": true
+    },
+    "C": {
+      "item": "minecraft:crying_obsidian",
+      "optional": false,
+      "consume": true
+    }
+  },
+  "parameters": {
+    "innerColor": "0x0080C0",
+    "outerColor": "0x004080",
+    "beamColor": "0x0080C0",
+    "connectBeam": false
+  }
+}

@@ -170,6 +170,7 @@ public class FamiliarHelper {
         // Add new goals
         familiar.goalSelector.addGoal(2, new StayWhenOrderedToGoal(familiar));
         familiar.goalSelector.addGoal(6, new FollowCasterGoal(familiar, 1.0D, 20, 2.0F, 16, false));
+        familiar.goalSelector.addGoal(7, new CastUtilitySpell(familiar, 16.0F));
         familiar.targetSelector.addGoal(0, new NeverTargetCasterGoal(familiar));
         familiar.targetSelector.addGoal(1, new CasterHurtByTargetGoal(familiar));
         familiar.targetSelector.addGoal(2, new CasterHurtTargetGoal(familiar));

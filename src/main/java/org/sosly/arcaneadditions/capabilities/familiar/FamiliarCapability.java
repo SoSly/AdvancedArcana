@@ -22,9 +22,13 @@ import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.sosly.arcaneadditions.ArcaneAdditions;
+import org.sosly.arcaneadditions.spells.FamiliarSpell;
 import org.sosly.arcaneadditions.utils.FamiliarHelper;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FamiliarCapability implements IFamiliarCapability {
     private static final float FAMILIAR_HEALING_RATE = 25.0f;
@@ -43,6 +47,7 @@ public class FamiliarCapability implements IFamiliarCapability {
     private BlockPos loadPos;
     private String name = "";
     private boolean orderedToStay = false;
+    private LinkedHashSet<FamiliarSpell> spellsKnown = new LinkedHashSet<>();
     private EntityType<? extends Mob> type;
 
     @Override
@@ -179,6 +184,21 @@ public class FamiliarCapability implements IFamiliarCapability {
         this.familiar = null;
         this.familiarUUID = null;
         this.orderedToStay = false;
+        this.spellsKnown = new LinkedHashSet<>();
+    }
+
+    @Override
+    public void addSpellKnown(FamiliarSpell spell) {
+        AtomicInteger i = new AtomicInteger();
+        // todo: base this limit on the tier of the caster (T3 = 1, T4 = 2, T5 = 3)
+        // todo: make sure we are getting rid of the oldest spell first
+        spellsKnown.removeIf((s) -> i.getAndIncrement() > 2);
+        spellsKnown.add(spell);
+    }
+
+    @Override
+    public Collection<FamiliarSpell> getSpellsKnown() {
+        return spellsKnown;
     }
 
     @Override

@@ -42,8 +42,8 @@
     }
   },
   "parameters": {
-    "innerColor": "0x5406a1",
-    "outerColor": "0x2e0d4f",
+    "innerColor": "0x0080C0",
+    "outerColor": "0x004080",
     "beamColor": "0x0080C0",
     "connectBeam": false
   }

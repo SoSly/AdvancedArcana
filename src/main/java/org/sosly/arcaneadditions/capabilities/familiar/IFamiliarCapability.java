@@ -7,8 +7,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.sosly.arcaneadditions.spells.FamiliarSpell;
 import org.sosly.arcaneadditions.utils.RLoc;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface IFamiliarCapability {
@@ -40,7 +42,9 @@ public interface IFamiliarCapability {
 
     boolean isOrderedToStay();
     void setOrderedToStay(boolean value);
-    void reset();
 
+    void reset();
+    void addSpellKnown(FamiliarSpell spell);
+    Collection<FamiliarSpell> getSpellsKnown();
     void tick();
 }

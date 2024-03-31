@@ -51,6 +51,8 @@
   "arcaneadditions:rituals/bind_familiar.failed": "Your familiar could not be summoned into the world.",
   "arcaneadditions:rituals/bind_familiar.success": "You bind a %s familiar.",
 
+  "arcaneadditions:rituals/train_familiar": "Ritual of Familiar Magic",
+
   "arcaneadditions:shapes/familiar": "Familiar",
   "arcaneadditions:shapes/shared": "Shared",
 

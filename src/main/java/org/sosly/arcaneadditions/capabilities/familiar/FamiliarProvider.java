@@ -1,5 +1,6 @@
 package org.sosly.arcaneadditions.capabilities.familiar;
 
+import com.mna.spells.crafting.SpellRecipe;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -14,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.sosly.arcaneadditions.spells.FamiliarSpell;
 
 public class FamiliarProvider implements ICapabilitySerializable<Tag> {
     public static final Capability<IFamiliarCapability> FAMILIAR = CapabilityManager.get(new CapabilityToken<>() {});
@@ -53,6 +55,20 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
         if (instance.isOrderedToStay()) {
             nbt.putBoolean("orderedToStay", instance.isOrderedToStay());
         }
+        if (!instance.getSpellsKnown().isEmpty()) {
+            CompoundTag spells = new CompoundTag();
+            int i = 0;
+            for (FamiliarSpell spell : instance.getSpellsKnown()) {
+                CompoundTag snbt = new CompoundTag();
+                snbt.putBoolean("offensive", spell.isOffensive());
+                snbt.putInt("frequency", spell.getFrequency().ordinal());
+                CompoundTag rnbt = new CompoundTag();
+                spell.getRecipe().writeToNBT(rnbt);
+                snbt.put("recipe", rnbt);
+                spells.put("spell_" + i, snbt);
+            }
+            nbt.put("spells", spells);
+        }
         return nbt;
     }
 
@@ -86,6 +102,20 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
                     throw new RuntimeException("Could not get type for Familiar.");
                 }
                 instance.setType((EntityType<? extends Mob>) type);
+            }
+            if (cnbt.contains("spells")) {
+                CompoundTag spells = cnbt.getCompound("spells");
+                for (String key : spells.getAllKeys()) {
+                    CompoundTag snbt = spells.getCompound(key);
+                    SpellRecipe recipe = SpellRecipe.fromNBT(snbt.getCompound("recipe"));
+                    if (recipe.getShape() == null) {
+                        continue;
+                    }
+                    boolean offensive = snbt.getBoolean("offensive");
+                    FamiliarSpell.Frequency frequency = FamiliarSpell.Frequency.values()[snbt.getInt("frequency")];
+                    FamiliarSpell spell = new FamiliarSpell(recipe, frequency, offensive);
+                        instance.addSpellKnown(spell);
+                }
             }
         }
     }
