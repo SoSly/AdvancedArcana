@@ -296,7 +296,7 @@
       }
     ]
   },
-  "Ritual: Bind Familiar": {
+  "Ritual: Little Friend": {
     "index": 0,
     "category": "rituals",
     "sections": [
@@ -371,7 +371,67 @@
     "related_recipes": [
       {
         "type": "ritual",
-        "location": "arcaneadditions:rituals/bind-familiar"
+        "location": "arcaneadditions:rituals/bind_familiar"
+      }
+    ]
+  },
+  "Ritual: Inculcation": {
+    "index": 0,
+    "category": "rituals",
+    "sections": [
+      {
+        "type": "title",
+        "value": "Ritual of Inculcation"
+      },
+      {
+          "type": "text",
+          "value": "",
+          "json": [
+            {
+              "text": "This ritual allows me to teach my familiar to cast spells.  "
+            },
+            {
+              "text": "I will need to provide them with a spell item, and they will need to have enough mana to cast "
+            },
+            {
+              "text": "the spell."
+            },
+            {
+              "text": "\n\n"
+            },
+            {
+              "text": "The type of ingot used will determine the frequency at which they cast the spell, with rarer "
+            },
+            {
+              "text": "ingots causing them to cast the spell more often."
+            },
+            {
+                "text": "\n\n"
+            },
+            {
+                "text": "If I use "
+            },
+            {
+              "text": " gunpowder",
+              "color": "blue"
+            },
+            {
+              "text": " instead of "
+            },
+            {
+                "text": " vinteum dust",
+                "color": "blue"
+            },
+            {
+                "text": ", my familiar will attempt to cast the spell on their target in combat."
+            }
+          ]
+      }
+    ],
+    "related_recipes": [
+      {
+        "type": "ritual",
+        "location": "arcaneadditions:rituals/train_familiar"
       }
     ]
   },
