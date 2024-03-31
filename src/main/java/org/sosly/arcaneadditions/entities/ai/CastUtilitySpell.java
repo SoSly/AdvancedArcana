@@ -1,6 +1,8 @@
 package org.sosly.arcaneadditions.entities.ai;
 
 import com.mna.api.ManaAndArtificeMod;
+import com.mna.api.spells.attributes.Attribute;
+import com.mna.api.spells.parts.Shape;
 import com.mna.api.spells.targeting.SpellSource;
 import com.mna.api.spells.targeting.SpellTarget;
 import com.mna.spells.SpellsInit;
@@ -22,8 +24,8 @@ public class CastUtilitySpell extends Goal {
     private final float maxCastDistance;
     private boolean hasCast;
     private boolean cannotCast;
+    private double distance;
     private long lastAttempt;
-    private long lastCast;
     private Optional<FamiliarSpell> spellToCast = Optional.empty();
     private LivingEntity target;
     private int seeTime;
@@ -33,7 +35,7 @@ public class CastUtilitySpell extends Goal {
 
     public CastUtilitySpell(Mob familiar, float maxCastDistance) {
         this.lastAttempt = -1;
-        this.lastCast = -1;
+        this.distance = 0;
         this.strafingTime = -1;
         this.hasCast = false;
         this.familiar = familiar;
@@ -88,20 +90,25 @@ public class CastUtilitySpell extends Goal {
         if (spell.getRecipe().getShape() == null) {
             return;
         }
-        if (spell.getRecipe().getShape().equals(SpellsRegistry.FAMILIAR)
-            || spell.getRecipe().getShape().equals(SpellsRegistry.SHARED)
-            || spell.getRecipe().getShape().equals(SpellsInit.SELF)) {
-
+        Shape shape = spell.getRecipe().getShape().getPart();
+        if (shape.equals(SpellsRegistry.FAMILIAR) || shape.equals(SpellsRegistry.SHARED) || shape.equals(SpellsInit.SELF)) {
             target = familiar;
+            distance = 0;
+        } else if (shape.equals(SpellsInit.PROJECTILE)) {
+            IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
+            if (cap == null) {
+                return;
+            }
+            target = cap.getCaster();
+            distance = maxCastDistance;
         } else {
             IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
             if (cap == null) {
                 return;
             }
             target = cap.getCaster();
+            distance = Math.max(spellToCast.get().getRecipe().getShape().getValue(Attribute.RANGE), 4);
         }
-
-        familiar.setItemInHand(InteractionHand.MAIN_HAND, spell.getRecipe().createAsSpell());
     }
 
     @Override
@@ -109,8 +116,6 @@ public class CastUtilitySpell extends Goal {
         super.stop();
         this.hasCast = false;
         this.cannotCast = false;
-        familiar.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-        familiar.stopUsingItem();
     }
 
     @Override
@@ -133,12 +138,11 @@ public class CastUtilitySpell extends Goal {
         }
 
         if (target.equals(familiar)) {
-            SpellTarget target = new SpellTarget(familiar);
+            familiar.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
             ManaAndArtificeMod.getSpellHelper()
-                    .affect(familiar.getItemInHand(InteractionHand.MAIN_HAND), spellToCast.get().getRecipe(),
-                            familiar.level(), new SpellSource(familiar, InteractionHand.MAIN_HAND), target);
+                    .affect(spellToCast.get().getRecipe().createAsSpell(), spellToCast.get().getRecipe(),
+                            familiar.level(), new SpellSource(familiar, InteractionHand.MAIN_HAND), new SpellTarget(familiar));
             this.hasCast = true;
-            this.lastCast = (int) familiar.getServer().overworld().getGameTime();
             return;
         }
 
@@ -160,7 +164,7 @@ public class CastUtilitySpell extends Goal {
             --this.seeTime;
         }
 
-        if (!(distanceToTarget > maxCastDistance) && seeTime >= 20) {
+        if (!(distanceToTarget > distance || distanceToTarget > maxCastDistance) && seeTime >= 20) {
             familiar.getNavigation().stop();
             ++this.strafingTime;
         } else {
@@ -181,9 +185,9 @@ public class CastUtilitySpell extends Goal {
         }
 
         if (strafingTime >= -1) {
-            if (distanceToTarget > maxCastDistance * 0.75) {
+            if (distanceToTarget > distance * 0.75) {
                 strafingBackwards = false;
-            } else if (distanceToTarget < maxCastDistance * 0.25) {
+            } else if (distanceToTarget < distance * 0.25) {
                 strafingBackwards = true;
             }
 
@@ -193,15 +197,15 @@ public class CastUtilitySpell extends Goal {
             familiar.getLookControl().setLookAt(target, 30.0F, 30.0F);
         }
 
-        if (distanceToTarget <= maxCastDistance) {
+        if (distanceToTarget <= distance) {
             familiar.getNavigation().stop();
             familiar.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            familiar.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
             ManaAndArtificeMod.getSpellHelper()
-                    .affect(familiar.getItemInHand(InteractionHand.MAIN_HAND), spellToCast.get().getRecipe(),
+                    .affect(spellToCast.get().getRecipe().createAsSpell(), spellToCast.get().getRecipe(),
                             familiar.level(), new SpellSource(familiar, InteractionHand.MAIN_HAND), new SpellTarget(target));
             cap.getCastingResource().consume(familiar, mana);
             this.hasCast = true;
-            this.lastCast = familiar.getServer().overworld().getGameTime();
             this.spellToCast.get().setLastCast(familiar.getServer().overworld().getGameTime());
             this.stop();
         }
