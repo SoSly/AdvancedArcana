@@ -81,7 +81,7 @@ public class TrainFamiliarRitual extends RitualEffect {
 
         // Create the familiar spell
         FamiliarSpell spell = new FamiliarSpell(name, recipe, frequency, offensive);
-        familiar.addSpellKnown(spell);
+        familiar.addSpellKnown(spell, true);
 
         return true;
     }

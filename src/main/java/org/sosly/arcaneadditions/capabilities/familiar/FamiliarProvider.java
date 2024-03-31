@@ -117,7 +117,7 @@ public class FamiliarProvider implements ICapabilitySerializable<Tag> {
                     FamiliarSpell.Frequency frequency = FamiliarSpell.Frequency.values()[snbt.getInt("frequency")];
                     Component name = Component.literal(snbt.getString("name"));
                     FamiliarSpell spell = new FamiliarSpell(name, recipe, frequency, offensive);
-                        instance.addSpellKnown(spell);
+                        instance.addSpellKnown(spell, false);
                 }
             }
         }

@@ -190,13 +190,18 @@ public class FamiliarCapability implements IFamiliarCapability {
     }
 
     @Override
-    public void addSpellKnown(FamiliarSpell spell) {
+    public void addSpellKnown(FamiliarSpell spell, boolean checkTiers) {
         AtomicInteger i = new AtomicInteger();
-        if (caster == null) {
-            return;
+        final int maxKnown;
+        if (checkTiers) {
+            if (caster == null) {
+                return;
+            }
+            IPlayerProgression progression = caster.getCapability(PlayerProgressionProvider.PROGRESSION).orElse(null);
+            maxKnown = progression.getTier() - 2;
+        } else {
+            maxKnown = 3;
         }
-        IPlayerProgression progression = caster.getCapability(PlayerProgressionProvider.PROGRESSION).orElse(null);
-        int maxKnown = progression.getTier() - 2;
         spellsKnown.removeIf((s) -> (i.getAndIncrement() > maxKnown || s.getName().equals(spell.getName())));
         spellsKnown.add(spell);
     }

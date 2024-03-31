@@ -44,7 +44,7 @@ public interface IFamiliarCapability {
     void setOrderedToStay(boolean value);
 
     void reset();
-    void addSpellKnown(FamiliarSpell spell);
+    void addSpellKnown(FamiliarSpell spell, boolean checkTiers);
     Collection<FamiliarSpell> getSpellsKnown();
     void tick();
 }

@@ -9,7 +9,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
-import org.sosly.arcaneadditions.ArcaneAdditions;
 import org.sosly.arcaneadditions.capabilities.familiar.IFamiliarCapability;
 import org.sosly.arcaneadditions.spells.FamiliarSpell;
 import org.sosly.arcaneadditions.spells.SpellsRegistry;
@@ -45,7 +44,10 @@ public class CastUtilitySpell extends Goal {
     @Override
     public boolean canUse() {
         IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
-        if (cap == null || cap.isOrderedToStay() || cap.isBapped() || cap.getSpellsKnown().isEmpty()) {
+        if (cap == null || cap.isOrderedToStay() || cap.isBapped()) {
+            return false;
+        }
+        if (cap.getSpellsKnown().isEmpty()) {
             return false;
         }
         long sinceLastAttempt = familiar.getServer().overworld().getGameTime() - lastAttempt;
@@ -62,7 +64,6 @@ public class CastUtilitySpell extends Goal {
                     }
                     int possibility = Math.max(FamiliarHelper.calculateSpellcastingProbabilitypublic(spell.getFrequency().getSeconds(), sinceLastCast), 1);
                     int random = familiar.getServer().overworld().getRandom().nextInt(possibility);
-                    ArcaneAdditions.LOGGER.debug("spell: " + spell.getName().getString() + ", possibility: " + possibility + ", random: " + random + ", sinceLastCast: " + sinceLastCast);
                     return random == 0;
                 })
                 .findAny();
@@ -94,7 +95,7 @@ public class CastUtilitySpell extends Goal {
             target = familiar;
         } else {
             IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
-            if (cap == null || cap.isOrderedToStay()) {
+            if (cap == null) {
                 return;
             }
             target = cap.getCaster();
@@ -202,7 +203,6 @@ public class CastUtilitySpell extends Goal {
             this.hasCast = true;
             this.lastCast = familiar.getServer().overworld().getGameTime();
             this.spellToCast.get().setLastCast(familiar.getServer().overworld().getGameTime());
-            ArcaneAdditions.LOGGER.error("casting spell");
             this.stop();
         }
     }
