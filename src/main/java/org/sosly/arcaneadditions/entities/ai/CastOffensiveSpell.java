@@ -19,7 +19,7 @@ import org.sosly.arcaneadditions.utils.FamiliarHelper;
 import java.util.EnumSet;
 import java.util.Optional;
 
-public class CastUtilitySpell extends Goal {
+public class CastOffensiveSpell extends Goal {
     private final Mob familiar;
     private final float maxCastDistance;
     private boolean hasCast;
@@ -33,7 +33,7 @@ public class CastUtilitySpell extends Goal {
     private boolean strafingClockwise;
     private int strafingTime;
 
-    public CastUtilitySpell(Mob familiar, float maxCastDistance) {
+    public CastOffensiveSpell(Mob familiar, float maxCastDistance) {
         this.lastAttempt = -1;
         this.distance = 0;
         this.strafingTime = -1;
@@ -52,13 +52,16 @@ public class CastUtilitySpell extends Goal {
         if (cap.getSpellsKnown().isEmpty()) {
             return false;
         }
+        if (familiar.getTarget() == null) {
+            return false;
+        }
         long sinceLastAttempt = familiar.getServer().overworld().getGameTime() - lastAttempt;
         if (sinceLastAttempt < 20L) {
             return false;
         }
         lastAttempt = familiar.getServer().overworld().getGameTime();
         spellToCast = cap.getSpellsKnown().stream()
-                .filter(spell -> !spell.isOffensive())
+                .filter(FamiliarSpell::isOffensive)
                 .filter(spell -> {
                     int sinceLastCast = (int) ((familiar.getServer().overworld().getGameTime() - spell.getLastCast())/20);
                     if (sinceLastCast < (spell.getFrequency().getSeconds()/4)) {
@@ -99,14 +102,14 @@ public class CastUtilitySpell extends Goal {
             if (cap == null) {
                 return;
             }
-            target = cap.getCaster();
+            target = familiar.getTarget();
             distance = maxCastDistance;
         } else {
             IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
             if (cap == null) {
                 return;
             }
-            target = cap.getCaster();
+            target = familiar.getTarget();
             distance = Math.max(spellToCast.get().getRecipe().getShape().getValue(Attribute.RANGE), 4);
         }
     }
@@ -116,6 +119,7 @@ public class CastUtilitySpell extends Goal {
         super.stop();
         this.hasCast = false;
         this.cannotCast = false;
+        this.target = null;
     }
 
     @Override

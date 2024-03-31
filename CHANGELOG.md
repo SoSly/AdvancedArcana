@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - familiars now have damage resistance based on their caster's level
 - you can now bap your familiar with a wand to temporarily unsummon them
 - there is a cantrip to re-summon your familiar after you have bapped them
+- familiars can now learn spells with the ritual of learning
 
 ### Changed
 - the treestride gui was reworked and now better matches those included in mana & artifice

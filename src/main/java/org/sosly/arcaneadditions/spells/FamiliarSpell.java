@@ -64,7 +64,7 @@ public class FamiliarSpell {
         }
 
         public static Frequency ByIngot(ItemStack stack) {
-            if (ItemInit.VINTEUM_INGOT_PURIFIED_SUPERHEATED.equals(stack.getItem())) {
+            if (ItemInit.VINTEUM_INGOT_PURIFIED_SUPERHEATED.get().equals(stack.getItem())) {
                 return SUPERHEATED_PURIFIED_VINTEUM;
             } else if (Items.GOLD_INGOT.equals(stack.getItem())) {
                 return GOLD;

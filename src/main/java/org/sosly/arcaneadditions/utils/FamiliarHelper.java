@@ -162,13 +162,13 @@ public class FamiliarHelper {
         familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof CastSpellAtTargetGoal);
         familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof CastSpellOnSelfGoal);
         familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof EatBlockGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof PanicGoal);
         familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof PathfindToRaidGoal);
         familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof TemptGoal);
         familiar.targetSelector.removeAllGoals((g) -> true);
 
         // Add new goals
         familiar.goalSelector.addGoal(2, new StayWhenOrderedToGoal(familiar));
+        familiar.goalSelector.addGoal(5, new CastOffensiveSpell(familiar, 16.0F * 16.0F));
         familiar.goalSelector.addGoal(6, new FollowCasterGoal(familiar, 1.0D, 20, 2.0F, 16, false));
         familiar.goalSelector.addGoal(7, new CastUtilitySpell(familiar, 16.0F * 16.0F));
         familiar.targetSelector.addGoal(0, new NeverTargetCasterGoal(familiar));
