@@ -10,17 +10,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - a new scribe's table was added for copying written spells onto blank vellum
 - you will now get an advancement when you summon your first familiar
+- familiars now have their own mana pool based on their caster's level
+- familiars now regenerate health over time if they have enough mana to do so
+- familiars now have damage resistance based on their caster's level
+- you can now bap your familiar with a wand to temporarily unsummon them
+- there is a cantrip to re-summon your familiar after you have bapped them
+- familiars can now learn spells with the ritual of inculcation
 
 ### Changed
 - the treestride gui was reworked and now better matches those included in mana & artifice
-- improved familiar AI a little bit, but it still needs a lot of work.
 - the recipe for a soulsearcher's lens was changed to require transmuted silver instead of a purified vinteum ingot.
+- improved familiar AI a little bit, but it still needs a lot of work.
+- familiars now disconnect when their caster leaves the server. Don't worry, they'll be back when you log in again.
+- familiars may now wander a little farther from you
+- the recipe for a soulsearcher's lens was changed to require transmuted silver instead of a purified vinteum ingot.
+- familiars now disconnect when their caster leaves the server. Don't worry, they'll be back when you log in again.
+- familiars may now wander a little farther from you
 
 ### Fixed
 - added the missing counterspell recipe
 - added modifier descriptions for all spell components
 - updated the treestride gui so that the delete button does not overlap the teleport text 
-
 
 ## [1.20.1-forge-1.8.1](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.8.1)
 

@@ -296,20 +296,20 @@
       }
     ]
   },
-  "Ritual: Bind Familiar": {
-    "index": 1,
+  "Ritual: Little Friend": {
+    "index": 0,
     "category": "rituals",
     "sections": [
       {
         "type": "title",
-        "value": "Ritual of Familiar Binding"
+        "value": "Ritual of the Little Friend"
       },
       {
         "type": "text",
         "value": "",
         "json": [
           {
-            "text": "This creature calls forth a fey, demon, soul, or spirit and shapes its body based on a "
+            "text": "This ritual calls forth a fey, demon, soul, or spirit and shapes its body based on a "
           },
           {
             "text": "Phylactery ",
@@ -322,19 +322,48 @@
             "text": "\n\n"
           },
           {
-            "text": "The creature will be bound to me, and I can affect it with appropriately shaped spells.  "
+            "text": "The creature will be bound to me, and I can affect it from any distance with sorcery using the "
           },
           {
-            "text": "It will follow me like a pet, returning to my side whenever it strays too far."
+            "text": "Familiar",
+            "color": "blue"
+          },
+          {
+            "text": " or"
+          },
+          {
+              "text": " Shared",
+              "color": "blue"
+          },
+          {
+            "text": " shapes. It will follow me like a pet, returning to my side whenever it strays too far."
           },
           {
             "text": "\n\n"
           },
           {
-            "text": "It seems I can only have one of these familiars at a time, "
+            "text": "It seems I can only have one of these familiars at a time, but if my familiar dies I can always call another."
           },
           {
-            "text": "but if my familiar dies I can always call another."
+            "text": "\n\n"
+          },
+          {
+            "text": "Using a manaweaver's wand, I can gently bap my familiar on the head to temporarily dismiss them."
+          },
+          {
+            "text": " There is probably a cantrip I can learn to summon them back from wherever it is they are dismissed to."
+          },
+          {
+            "text": "\n\n"
+          },
+          {
+            "text": "My familiar has their own mana, and they seem to use it to regenerate their health, as well as to"
+          },
+          {
+            "text": " defend themself from harm, although I am sure there is a limit to their resistances.  With some"
+          },
+          {
+            "text": " effort, I can probably teach them to use their mana to cast spells."
           }
         ]
       }
@@ -342,7 +371,67 @@
     "related_recipes": [
       {
         "type": "ritual",
-        "location": "arcaneadditions:rituals/bind-familiar"
+        "location": "arcaneadditions:rituals/bind_familiar"
+      }
+    ]
+  },
+  "Ritual: Inculcation": {
+    "index": 0,
+    "category": "rituals",
+    "sections": [
+      {
+        "type": "title",
+        "value": "Ritual of Inculcation"
+      },
+      {
+          "type": "text",
+          "value": "",
+          "json": [
+            {
+              "text": "This ritual allows me to teach my familiar to cast spells.  "
+            },
+            {
+              "text": "I will need to provide them with a spell item, and they will need to have enough mana to cast "
+            },
+            {
+              "text": "the spell."
+            },
+            {
+              "text": "\n\n"
+            },
+            {
+              "text": "The type of ingot used will determine the frequency at which they cast the spell, with rarer "
+            },
+            {
+              "text": "ingots causing them to cast the spell more often."
+            },
+            {
+                "text": "\n\n"
+            },
+            {
+                "text": "If I use "
+            },
+            {
+              "text": " gunpowder",
+              "color": "blue"
+            },
+            {
+              "text": " instead of "
+            },
+            {
+                "text": " vinteum dust",
+                "color": "blue"
+            },
+            {
+                "text": ", my familiar will attempt to cast the spell on their target in combat."
+            }
+          ]
+      }
+    ],
+    "related_recipes": [
+      {
+        "type": "ritual",
+        "location": "arcaneadditions:rituals/train_familiar"
       }
     ]
   },

@@ -112,17 +112,9 @@ dependencies {
     implementation fg.deobf("curse.maven:crafted-core-${crafted_core_projectId}:${crafted_core_fileId}")
     implementation fg.deobf("curse.maven:woodwalkers-${woodwalkers_projectId}:${woodwalkers_fileId}")
 
-    // these mods are included only for the purpose of testing polymorph compatibility with other mods
-//    runtimeOnly fg.deobf("citadel:citadel:1.11.3-1.18.2")
-//    runtimeOnly fg.deobf("alexsmobs:alexsmobs:1.18.6")
-//    runtimeOnly fg.deobf("crittersandcompanions:crittersandcompanions:1.18.2-1.0.2")
-//    runtimeOnly fg.deobf("exoticbirds:exoticbirds:1.18.2-1.8.0")
-//    runtimeOnly fg.deobf("lilwings:lilwings:forge-1.18.2-1.2.4")
-//    runtimeOnly fg.deobf("naturalist:naturalist:forge-1.1.1-1.18.2")
-
     // these mods are included only for the purpose of testing
     runtimeOnly fg.deobf("curse.maven:jei-${jei_projectId}:${jei_fileId}")
-    runtimeOnly fg.deobf("curse.maven:better-advancements-${advancements_projectId}:${advancements_fileId}")
+    runtimeOnly fg.deobf("curse.maven:betteradvancements-${advancements_projectId}:${advancements_fileId}")
 }
 
 
