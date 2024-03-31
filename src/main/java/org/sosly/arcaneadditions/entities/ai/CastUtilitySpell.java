@@ -62,7 +62,7 @@ public class CastUtilitySpell extends Goal {
         spellToCast = cap.getSpellsKnown().stream()
                 .filter(spell -> !spell.isOffensive())
                 .filter(spell -> {
-                    int possibility = (int) Math.max(spell.getFrequency().getSeconds() - ((sinceLastCast - 20L) / 2), 1L);
+                    int possibility = (int) Math.max(spell.getFrequency().getSeconds() - ((sinceLastCast - 20L) / 40), 1L);
                     int random = familiar.getServer().overworld().getRandom().nextInt(possibility);
                     ArcaneAdditions.LOGGER.error("possibility: " + possibility + ", ticks: " + spell.getFrequency().getSeconds() + ", random: " + random);
                     return random == 0;
