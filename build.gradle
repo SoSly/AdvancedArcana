@@ -28,7 +28,7 @@ apply plugin: 'maven-publish'
 apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: 'org.spongepowered.mixin'
 
-version = "${mod_version}"
+version = "${minecraft_version}-${api_name}-${mod_version}"
 group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 base {
     archivesName = "${mod_id}-${api_name}-${minecraft_version}"

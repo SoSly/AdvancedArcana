@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/SoSly/ArcaneAdditions/tree/1.20.1)
 
+## [1.20.1-forge-1.9.1](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.1)
+### Fixed
+- you no longer require a familiar to engage with other mobs
+
 ## [1.20.1-forge-1.9.0](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.0)
 ### Added
 - a new scribe's table was added for copying written spells onto blank vellum
