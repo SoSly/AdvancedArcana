@@ -102,7 +102,7 @@ public class BindFamiliarEvents {
         }
 
         Mob familiar = cap.getFamiliar();
-        if (!familiar.equals(event.getTarget())) {
+        if (familiar == null || !familiar.equals(event.getTarget())) {
             return;
         }
 
