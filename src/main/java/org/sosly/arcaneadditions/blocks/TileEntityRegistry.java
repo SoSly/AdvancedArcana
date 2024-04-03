@@ -18,8 +18,10 @@ public class TileEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ArcaneAdditions.MOD_ID);
     public static final RegistryObject<BlockEntityType<ScribesBenchTile>> SCRIBES_BENCH = TILE_ENTITIES.register("scribes_bench", () -> Builder.of(ScribesBenchTile::new, new Block[]{BlockRegistry.SCRIBES_BENCH.get()}).build(null));
 
-    @SubscribeEvent
-    public static void onClientSetupEvent(FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(SCRIBES_BENCH.get(), (ctx) -> new WizardLabRenderer<>(ctx, new ScribesBenchModel()));
+    public class Client {
+        @SubscribeEvent
+        public static void onClientSetupEvent(FMLClientSetupEvent event) {
+            BlockEntityRenderers.register(SCRIBES_BENCH.get(), (ctx) -> new WizardLabRenderer<>(ctx, new ScribesBenchModel()));
+        }
     }
 }

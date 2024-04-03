@@ -49,16 +49,16 @@ public class ArcaneAdditions {
         BlockRegistry.BLOCKS.register(modbus);
         EffectRegistry.EFFECTS.register(modbus);
         EntityRegistry.ENTITY_TYPES.register(modbus);
+        TileEntityRegistry.TILE_ENTITIES.register(modbus);
         ItemRegistry.ITEMS.register(modbus);
         MenuRegistry.MENUS.register(modbus);
-        TileEntityRegistry.TILE_ENTITIES.register(modbus);
         MinecraftForge.EVENT_BUS.register(this);
         modbus.addListener(ArcaneAdditions::setupCommon);
 
         if (FMLEnvironment.dist.isClient()) {
             proxy = new ClientProxy();
             modbus.register(BlockRegistry.class);
-            modbus.register(TileEntityRegistry.class);
+            modbus.register(TileEntityRegistry.Client.class);
         }
     }
 
