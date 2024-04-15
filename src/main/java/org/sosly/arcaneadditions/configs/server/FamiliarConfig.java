@@ -1,7 +1,7 @@
-package org.sosly.arcaneadditions.configs;
+package org.sosly.arcaneadditions.configs.server;
 
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraftforge.common.ForgeConfigSpec;
+import org.sosly.arcaneadditions.configs.Config;
 
 import java.util.List;
 
@@ -16,8 +16,12 @@ public class FamiliarConfig {
                 .define("familiars", List.of(
                         "minecraft:bat", "minecraft:cat", "minecraft:parrot", "minecraft:fox",
                         "minecraft:rabbit", "minecraft:chicken"
-                ));
+                ), this::isValidFamiliarList);
 
         builder.pop();
+    }
+
+    private <T> boolean isValidFamiliarList(T list) {
+        return Config.isValidEntityList(list);
     }
 }
