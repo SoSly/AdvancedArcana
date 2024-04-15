@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased](https://github.com/SoSly/ArcaneAdditions/tree/1.20.1)
+## [1.20.1-forge-1.9.3](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.3)
+### Fixed
+- fixed changes to the familiar list not being saved
+- this also might have fixed the config file rotating on every server start?
+
 ## [1.20.1-forge-1.9.2](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.2)
 ### Fixed
 - we no longer attempt to render the scribe's bench on the server (which was causing a crash)

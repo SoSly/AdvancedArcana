@@ -7,23 +7,20 @@
 
 package org.sosly.arcaneadditions.configs;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 import org.sosly.arcaneadditions.ArcaneAdditions;
+import org.sosly.arcaneadditions.configs.server.FamiliarConfig;
+import org.sosly.arcaneadditions.configs.server.PolymorphConfig;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
-
-    private Config() {}
-
     public static final Server SERVER;
     public static final ForgeConfigSpec SERVER_SPEC;
 
@@ -33,19 +30,34 @@ public class Config {
         SERVER = serverSpec.getLeft();
     }
 
+    public static <T> boolean isValidEntityList(T entry) {
+        if (!(entry instanceof List)) {
+            return false;
+        }
+
+        for (Object i : (List<?>) entry) {
+            if (!(i instanceof String)) {
+                return false;
+            }
+
+            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation((String) i));
+            if (type == null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static class Server {
         public final FamiliarConfig familiar;
         public final PolymorphConfig polymorph;
         public final SoulSearchersLensConfig soulSearchersLens;
 
         public Server(ForgeConfigSpec.Builder builder) {
-            builder.comment("Server settings").push("server");
-
             familiar = new FamiliarConfig(builder);
             polymorph = new PolymorphConfig(builder);
             soulSearchersLens = new SoulSearchersLensConfig(builder);
-
-            builder.pop();
         }
 
         public static class SoulSearchersLensConfig {
