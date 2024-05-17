@@ -22,7 +22,6 @@ import com.mna.api.spells.targeting.SpellSource;
 import com.mna.api.spells.targeting.SpellTarget;
 import com.mna.capabilities.playerdata.progression.PlayerProgressionProvider;
 import com.mna.factions.Factions;
-import com.mna.items.ItemInit;
 import com.mna.items.sorcery.PhylacteryStaffItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
@@ -51,7 +51,6 @@ import org.sosly.arcaneadditions.networking.PacketHandler;
 import org.sosly.arcaneadditions.networking.messages.clientbound.SyncPolymorphCapabilitiesToClient;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -60,20 +59,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PolymorphComponent extends SpellEffect {
-    private final List<SpellReagent> reagents = new ArrayList<SpellReagent>();
+    private static final ResourceLocation reagent = new ResourceLocation("mna:animus_dust");
 
     public PolymorphComponent(ResourceLocation guiIcon) {
         super(guiIcon, new AttributeValuePair(Attribute.MAGNITUDE, 1.0F, 1.0F, 4.0F, 1.0F, 1.0F));
-    }
-
-    private boolean initReagents() {
-        if (!ItemInit.ANIMUS_DUST.isPresent()) {
-            return false;
-        }
-        if (reagents.isEmpty()) {
-            reagents.add(new SpellReagent(this, new ItemStack(ItemInit.ANIMUS_DUST.get()), false, false, true));
-        }
-        return true;
     }
 
     @Override
@@ -190,12 +179,15 @@ public class PolymorphComponent extends SpellEffect {
 
     @Override
     public List<SpellReagent> getRequiredReagents(@Nullable Player caster, @Nullable InteractionHand hand) {
-        if (!initReagents()) {
+        Item animusDust = ForgeRegistries.ITEMS.getValue(reagent);
+        if (animusDust == null) {
             return null;
         }
 
+        List<SpellReagent> reagents = List.of(new SpellReagent(this, new ItemStack(animusDust), false, false, true));
+
         if (caster == null) {
-            return this.reagents;
+            return reagents;
         }
 
         boolean isMorphed = caster.hasEffect(EffectRegistry.POLYMORPH.get());
@@ -217,7 +209,7 @@ public class PolymorphComponent extends SpellEffect {
 
         if (!isMorphed && !isMorphing.getValue()) {
             // about to morph
-            return this.reagents;
+            return reagents;
         }
 
         if (isMorphed && isMorphing.getValue()) {
@@ -225,7 +217,7 @@ public class PolymorphComponent extends SpellEffect {
             caster.getCapability(PolymorphProvider.POLYMORPH).ifPresent((p) -> {
                 p.setMorphing(false);
             });
-            return this.reagents;
+            return reagents;
         }
 
         if (!isMorphed && isMorphing.getValue()) {
@@ -241,7 +233,7 @@ public class PolymorphComponent extends SpellEffect {
             return null;
         }
 
-        return this.reagents;
+        return reagents;
     }
 
     public static void resetBonusHealth(ServerPlayer target) {

@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - chinese localization (thanks to @xiaoknya).
 
 ### Fixed
-- fixed the ritual of inculcation's name in tooltips.
-- fixed strip not giving xp or rote progression.
+- fixed the ritual of inculcation's name in tooltips
+- strip now progresses your magic level and as a rote
+- random polymorph staves no longer cause the game to crash
 
 ## [1.20.1-forge-1.9.3](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.3)
 ### Fixed
