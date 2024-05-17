@@ -55,6 +55,7 @@ public class StripComponent extends SpellEffect {
                 }
 
                 result.ifPresent(blockState -> level.setBlock(pos, blockState, 11));
+                return ComponentApplicationResult.SUCCESS;
             }
         }
 

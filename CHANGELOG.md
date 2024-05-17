@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - fixed the ritual of inculcation's name in tooltips.
+- fixed strip not giving xp or rote progression.
 
 ## [1.20.1-forge-1.9.3](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.3)
 ### Fixed
