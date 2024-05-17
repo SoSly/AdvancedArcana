@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - chinese localization (thanks to @xiaoknya).
 
+### Fixed
+- fixed the ritual of inculcation's name in tooltips.
+
 ## [1.20.1-forge-1.9.3](https://github.com/SoSly/ArcaneAdditions/releases/tag/1.20.1-forge-1.9.3)
 ### Fixed
 - fixed changes to the familiar list not being saved
