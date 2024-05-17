@@ -5,7 +5,8 @@ import com.mna.api.spells.attributes.Attribute;
 import com.mna.api.spells.parts.Shape;
 import com.mna.api.spells.targeting.SpellSource;
 import com.mna.api.spells.targeting.SpellTarget;
-import com.mna.spells.SpellsInit;
+import com.mna.spells.shapes.ShapeProjectile;
+import com.mna.spells.shapes.ShapeSelf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -13,7 +14,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import org.sosly.arcaneadditions.capabilities.familiar.IFamiliarCapability;
 import org.sosly.arcaneadditions.spells.FamiliarSpell;
-import org.sosly.arcaneadditions.spells.SpellsRegistry;
+import org.sosly.arcaneadditions.spells.shapes.FamiliarShape;
+import org.sosly.arcaneadditions.spells.shapes.SharedShape;
 import org.sosly.arcaneadditions.utils.FamiliarHelper;
 
 import java.util.EnumSet;
@@ -91,10 +93,10 @@ public class CastUtilitySpell extends Goal {
             return;
         }
         Shape shape = spell.getRecipe().getShape().getPart();
-        if (shape.equals(SpellsRegistry.FAMILIAR) || shape.equals(SpellsRegistry.SHARED) || shape.equals(SpellsInit.SELF)) {
+        if (shape instanceof FamiliarShape || shape instanceof SharedShape || shape instanceof ShapeSelf) {
             target = familiar;
             distance = 0;
-        } else if (shape.equals(SpellsInit.PROJECTILE)) {
+        } else if (shape instanceof ShapeProjectile) {
             IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(familiar);
             if (cap == null) {
                 return;
