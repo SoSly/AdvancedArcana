@@ -15,7 +15,7 @@ public class FamiliarConfig {
                 .translation("config.arcaneadditions.familiars")
                 .define("familiars", List.of(
                         "minecraft:bat", "minecraft:cat", "minecraft:parrot", "minecraft:fox",
-                        "minecraft:rabbit", "minecraft:chicken"
+                        "minecraft:rabbit", "minecraft:chicken", "minecraft:allay"
                 ), this::isValidFamiliarList);
 
         builder.pop();

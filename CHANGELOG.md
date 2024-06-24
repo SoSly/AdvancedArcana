@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - chinese localization (thanks to @xiaoknya).
 
+### Changed
+- allay can now be taken as a familiar by default
+
 ### Fixed
 - fixed the ritual of inculcation's name in tooltips
 - strip now progresses your magic level and as a rote
