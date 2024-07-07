@@ -2,7 +2,7 @@ package org.sosly.arcaneadditions.gui.menus;
 
 import com.mna.gui.containers.block.SimpleWizardLabContainer;
 import com.mna.gui.containers.slots.ItemFilterSlot;
-import com.mna.gui.containers.slots.SingleItemSlot;
+import com.mna.api.gui.SingleItemSlot;
 import com.mna.items.ItemInit;
 import com.mna.items.filters.SpellItemFilter;
 import net.minecraft.network.FriendlyByteBuf;
