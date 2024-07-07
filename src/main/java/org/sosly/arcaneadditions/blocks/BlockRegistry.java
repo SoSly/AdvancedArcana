@@ -4,7 +4,7 @@ import com.mna.api.blocks.interfaces.ICutoutBlock;
 import com.mna.api.blocks.interfaces.ITranslucentBlock;
 import com.mna.api.items.MACreativeTabs;
 import com.mna.api.items.TieredBlockItem;
-import com.mna.blocks.IOffsetPlace;
+import com.mna.api.blocks.interfaces.IOffsetPlace;
 import com.mna.items.OffsetPlacerItem;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
