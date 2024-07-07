@@ -80,7 +80,7 @@ public class BindFamiliarEvents {
 
         Mob familiar = FamiliarHelper.getFamiliar(player);
         if (familiar != null) {
-            familiar.remove(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+            familiar.remove(Entity.RemovalReason.DISCARDED);
             IFamiliarCapability cap = FamiliarHelper.getFamiliarCapability(player);
 
             if (cap != null) {
