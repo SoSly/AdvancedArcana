@@ -1,15 +1,12 @@
 package org.sosly.arcaneadditions.utils;
 
 import com.mna.api.capabilities.IPlayerMagic;
-import com.mna.api.entities.ai.CastSpellAtTargetGoal;
-import com.mna.api.entities.ai.CastSpellOnSelfGoal;
 import com.mna.capabilities.playerdata.magic.PlayerMagicProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -92,7 +89,7 @@ public class FamiliarHelper {
 
         Player caster = mob.level().getPlayerByUUID(mob.getPersistentData().getUUID(CASTER));
         if (caster == null) {
-            mob.remove(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+            mob.remove(Entity.RemovalReason.DISCARDED);
             return null;
         }
 
@@ -156,21 +153,15 @@ public class FamiliarHelper {
     }
 
     public static void setupFamiliarAI(Mob familiar) {
-        // Remove goals that we don't want
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof AvoidEntityGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof BreedGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof CastSpellAtTargetGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof CastSpellOnSelfGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof EatBlockGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof PathfindToRaidGoal);
-        familiar.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof TemptGoal);
-        familiar.targetSelector.removeAllGoals((g) -> true);
+        familiar.removeFreeWill();
 
         // Add new goals
         familiar.goalSelector.addGoal(2, new StayWhenOrderedToGoal(familiar));
         familiar.goalSelector.addGoal(5, new CastOffensiveSpell(familiar, 16.0F * 16.0F));
         familiar.goalSelector.addGoal(6, new FollowCasterGoal(familiar, 1.0D, 20, 2.0F, 16, false));
         familiar.goalSelector.addGoal(7, new CastUtilitySpell(familiar, 16.0F * 16.0F));
+        familiar.goalSelector.addGoal(10, new RandomWanderGoal(familiar, 1.0D, 20));
+
         familiar.targetSelector.addGoal(0, new NeverTargetCasterGoal(familiar));
         familiar.targetSelector.addGoal(1, new CasterHurtByTargetGoal(familiar));
         familiar.targetSelector.addGoal(2, new CasterHurtTargetGoal(familiar));

@@ -31,6 +31,11 @@ public class FollowCasterGoal extends Goal {
     private final boolean teleportToLeaves;
 
     public FollowCasterGoal(Mob familiar, double speed, float pathDist, float attackDist, float snapDist, boolean teleportToLeaves) {
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(familiar.getNavigation() instanceof GroundPathNavigation) && !(familiar.getNavigation() instanceof FlyingPathNavigation) && !(familiar.getNavigation() instanceof WaterBoundPathNavigation)) {
+            throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
+        }
+
         this.familiar = familiar;
         this.level = familiar.level();
         this.followSpeed = speed;
@@ -39,10 +44,6 @@ public class FollowCasterGoal extends Goal {
         this.attackDist = attackDist;
         this.snapDist = snapDist;
         this.teleportToLeaves = teleportToLeaves;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(familiar.getNavigation() instanceof GroundPathNavigation) && !(familiar.getNavigation() instanceof FlyingPathNavigation) && !(familiar.getNavigation() instanceof WaterBoundPathNavigation)) {
-            throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
-        }
     }
 
     @Override
